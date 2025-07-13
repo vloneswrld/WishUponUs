@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wish Upon Us</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(to bottom, #0d1b2a, #1b263b);
+      color: white;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .stars span {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.7;
+      animation: twinkle 2s infinite ease-in-out alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: 0.4; transform: scale(1); }
+      to { opacity: 1; transform: scale(1.5); }
+    }
+
+    .wish-box {
+      position: relative;
+      z-index: 2;
+      width: 80%;
+      max-width: 600px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+      min-height: 120px;
+    }
+
+    .wish {
+      font-size: 1.3rem;
+      color: #ffffff;
+      opacity: 0;
+      animation: fade 5s linear infinite;
+    }
+
+    @keyframes fade {
+      0%   { opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    @media screen and (max-width: 600px) {
+      .wish-box {
+        padding: 30px 20px;
+      }
+
+      .wish {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars"></div>
+
+  <div class="wish-box">
+    <div class="wish" id="wish">loading...</div>
+  </div>
+
+  <script>
+    const wishes = [
+      "I wish I could hug you right now.",
+      "I wish we had forever to just love each other.",
+      "I wish I could kiss your forehead every night before you sleep.",
+      "I wish we never had to say goodbye, even for a second.",
+      "I wish I could show you how much you mean to me.",
+      "I wish time slowed down when we talked.",
+      "I wish every lifetime led me to you.",
+      "I wish we could grow old together, laughing at our dumb jokes.",
+      "I wish you knew how safe you make me feel.",
+      "I wish for you. Always.",
+      "Every wish leads back to you. 💫"
+    ];
+
+    const wishEl = document.getElementById("wish");
+    let index = 0;
+
+    function showWish() {
+      wishEl.style.opacity = 0;
+      setTimeout(() => {
+        wishEl.textContent = wishes[index];
+        wishEl.style.animation = "none";
+        void wishEl.offsetWidth; // restart animation
+        wishEl.style.animation = null;
+        index = (index + 1) % wishes.length;
+      }, 500);
+    }
+
+    showWish();
+    setInterval(showWish, 5000);
+
+    // Star generator
+    const starContainer = document.getElementById("stars");
+    for (let i = 0; i < 80; i++) {
+      const star = document.createElement("span");
+      const size = Math.random() * 2 + 1;
+      const duration = Math.random() * 2 + 2;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      star.style.animationDuration = `${duration}s`;
+      star.style.opacity = `${0.3 + Math.random() * 0.7}`;
+      starContainer.appendChild(star);
+    }
+  </script>
+</body>
+</html>
